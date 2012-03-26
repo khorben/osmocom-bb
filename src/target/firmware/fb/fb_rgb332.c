@@ -27,6 +27,7 @@
 #include <fb/fb_rgb332.h>
 #include <stdio.h>
 #include <stdlib.h>
+#define abs(a) ((a) >= 0 ? (a) : -(a))
 
 void
 fb_rgb332_clear(){

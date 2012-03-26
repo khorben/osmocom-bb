@@ -52,6 +52,8 @@
 
 #include <l1ctl_proto.h>
 
+#define abs(a) ((a) >= 0 ? (a) : -(a))
+
 #define FB0_RETRY_COUNT		3
 #define AFC_RETRY_COUNT		30
 
