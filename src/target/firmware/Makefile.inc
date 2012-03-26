@@ -17,6 +17,7 @@ CFLAGS += -Wswitch -Wredundant-decls -Wreturn-type -Wshadow -Wnested-externs
 CFLAGS += -Wbad-function-cast -Wsign-compare -Waggregate-return
 CFLAGS += -Os -ffunction-sections
 CFLAGS += -g$(DEBUGF)
+CFLAGS += -ffreestanding
 
 # some older toolchains don't support this, ignore it for now
 #ASFLAGS=--g$(DEBUGF) $(INCLUDES) -D__ASSEMBLY__
