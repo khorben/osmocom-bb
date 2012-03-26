@@ -34,7 +34,7 @@ shared/libosmocore/build-host/Makefile: shared/libosmocore/configure shared/libo
 	cd shared/libosmocore/build-host && ../configure $(HOST_CONFARGS)
 
 shared/libosmocore/build-host/src/.libs/libosmocore.la: shared/libosmocore/build-host/Makefile
-	cd shared/libosmocore/build-host && make
+	cd shared/libosmocore/build-host && $(MAKE)
 
 
 libosmocore-target: shared/libosmocore/build-target/src/.libs/libosmocore.a
@@ -50,7 +50,7 @@ shared/libosmocore/build-target/Makefile: shared/libosmocore/configure shared/li
 		CFLAGS="-Os -ffunction-sections -I$(TOPDIR)/target/firmware/include -nostartfiles -nodefaultlibs"
 
 shared/libosmocore/build-target/src/.libs/libosmocore.a: shared/libosmocore/build-target/Makefile
-	cd shared/libosmocore/build-target && make
+	cd shared/libosmocore/build-target && $(MAKE)
 
 
 .PHONY: osmocon
@@ -63,7 +63,7 @@ host/osmocon/Makefile: host/osmocon/configure
 	cd host/osmocon && $(OSMOCORE_CONFIGURE_ENV) ./configure $(HOST_CONFARGS)
 
 host/osmocon/osmocon: host/osmocon/Makefile libosmocore-host
-	make -C host/osmocon
+	$(MAKE) -C host/osmocon
 
 
 .PHONY: gsmmap
@@ -76,7 +76,7 @@ host/gsmmap/Makefile: host/gsmmap/configure
 	cd host/gsmmap && $(OSMOCORE_CONFIGURE_ENV) ./configure $(HOST_CONFARGS)
 
 host/gsmmap/gsmmap: host/gsmmap/Makefile libosmocore-host
-	make -C host/gsmmap
+	$(MAKE) -C host/gsmmap
 
 
 .PHONY: layer23
@@ -89,30 +89,30 @@ host/layer23/Makefile: host/layer23/configure
 	cd host/layer23 && $(OSMOCORE_CONFIGURE_ENV) ./configure $(HOST_CONFARGS)
 
 host/layer23/layer23: host/layer23/Makefile libosmocore-host
-	make -C host/layer23
+	$(MAKE) -C host/layer23
 
 
 .PHONY: firmware
 firmware: libosmocore-target
-	make -C target/firmware CROSS_COMPILE=$(CROSS_TOOL_PREFIX)
+	$(MAKE) -C target/firmware CROSS_COMPILE=$(CROSS_TOOL_PREFIX)
 
 .PHONY: mtk-firmware
 mtk-firmware: libosmocore-target
-	make -C target/firmware -f Makefile.mtk CROSS_COMPILE=$(CROSS_TOOL_PREFIX)
+	$(MAKE) -C target/firmware -f Makefile.mtk CROSS_COMPILE=$(CROSS_TOOL_PREFIX)
 
 
 clean:
-	make -C shared/libosmocore/build-host $@
-	make -C shared/libosmocore/build-target $@
-	make -C host/layer23 $@
-	make -C host/osmocon $@
-	make -C target/firmware $@
-	make -C target/firmware -f Makefile.mtk $@
+	$(MAKE) -C shared/libosmocore/build-host $@
+	$(MAKE) -C shared/libosmocore/build-target $@
+	$(MAKE) -C host/layer23 $@
+	$(MAKE) -C host/osmocon $@
+	$(MAKE) -C target/firmware CROSS_COMPILE=$(CROSS_TOOL_PREFIX) $@
+	$(MAKE) -C target/firmware -f Makefile.mtk CROSS_COMPILE=$(CROSS_TOOL_PREFIX) $@
 
 distclean:
 	rm -rf shared/libosmocore/build-host
 	rm -rf shared/libosmocore/build-target
-	make -C host/layer23 $@
-	make -C host/osmocon $@
+	$(MAKE) -C host/layer23 $@
+	$(MAKE) -C host/osmocon $@
 # 'firmware' also handles 'mtk-firmware'
-	make -C target/firmware $@
+	$(MAKE) -C target/firmware CROSS_COMPILE=$(CROSS_TOOL_PREFIX) $@
