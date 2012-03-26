@@ -1,0 +1,8 @@
+This repository is a fork from osmocom-bb's master branch.
+
+The primary focus is to make it work for myself, meaning:
+- with a regular NetBSD-based toolchain (and compilation environment)
+- targetting the Openmoko Freerunner (GTA02) in particular, fully embedded
+- facilitate integration with external C programs using osmocom for telephony
+
+All bugs added by Pierre Pronchery <khorben@defora.org>.
